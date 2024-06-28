@@ -35,7 +35,8 @@ public abstract class Pessoa implements Serializable { // Tabela por classes con
 	// mappedBy = "pessoa" (mapeando o pai)
 	// orphanRemoval = true (deletando o pai com os filhos associados)
 	// cascade = CascadeType.ALL (crud em cascata)
-	// fetch = FetchType.LAZY (só vai carregar quando for chamado ou seja carregamento preguiçoso)
+	// fetch = FetchType.LAZY (só vai carregar quando precisar)
+	// fetch = FetchType.EAGER (traz do banco junto com o pai) 
 	@OneToMany(mappedBy = "pessoa", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
 
