@@ -2,6 +2,7 @@ package ijma.loja.virtual.mentoria.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -31,7 +32,8 @@ public class ItemVendaLoja implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "venda_compra_coja_virtual_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "venda_compra_coja_virtual_pk"))
 	private VendaCompraLojaVirtual vendaCompraLojaVirtual;
-
+	
+	@Column(nullable = false)
 	private Double quantidade;
 
 	public Long getId() {

@@ -2,6 +2,7 @@ package ijma.loja.virtual.mentoria.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -23,9 +24,11 @@ public class AvalicaoProduto implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_avalicao_produto")
 	private Long id;
-
+	
+	@Column(nullable = false)
 	private String nomeDescricao;
-
+	
+	@Column(nullable = false)
 	private Integer nota;
 
 	@ManyToOne(targetEntity = Pessoa.class)
