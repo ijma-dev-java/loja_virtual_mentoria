@@ -2,7 +2,8 @@ package ijma.loja.virtual.mentoria.enums;
 
 public enum TipoEndereco {
 
-	COBRANCA("Cobrança"), ENTREGA("Entregs");
+	COBRANCA("Cobrança"), 
+	ENTREGA("Entrega");
 
 	private String nomeDescricao;
 
