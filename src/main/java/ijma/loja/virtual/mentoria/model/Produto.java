@@ -4,14 +4,10 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
-import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -25,44 +21,45 @@ public class Produto implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_produto")
 	private Long id;
-	
+
 	@Column(nullable = false)
 	private String tipoUnidade;
-	
+
 	@Column(nullable = false)
 	private String nome;
-	
+
 	@Column(nullable = false)
 	private Boolean ativo = Boolean.TRUE;
-	
+
 	@Column(columnDefinition = "text", length = 2000, nullable = false)
 	private String nomeDescricao;
 
-	@ManyToOne
-	@JoinColumn(name = "nota_item_produto_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "nota_item_produto_pk"))
-	private NotaItemProduto notaItemProduto;
-	
+	// NotaItemProduto - ASSOCIAR
+
 	@Column(nullable = false)
 	private Double peso;
-	
+
 	@Column(nullable = false)
 	private Double largura;
-	
+
 	@Column(nullable = false)
 	private Double altura;
-	
+
 	@Column(nullable = false)
 	private Double profundidade;
-	
+
 	@Column(nullable = false)
 	private BigDecimal valorVenda = BigDecimal.ZERO;
-	
+
 	@Column(nullable = false)
 	private Integer quantidadeEstoque = 0;
-	
-	private String linkYoutube;
+
+	@Column()
+	private Integer quantidadeAlertaEstoque = 0;
 
 	private Boolean alertaQuantidadeEstoque = Boolean.FALSE;
+
+	private String linkYoutube;
 
 	private Integer quantidadeClique = 0;
 
@@ -104,14 +101,6 @@ public class Produto implements Serializable {
 
 	public void setNomeDescricao(String nomeDescricao) {
 		this.nomeDescricao = nomeDescricao;
-	}
-
-	public NotaItemProduto getNotaItemProduto() {
-		return notaItemProduto;
-	}
-
-	public void setNotaItemProduto(NotaItemProduto notaItemProduto) {
-		this.notaItemProduto = notaItemProduto;
 	}
 
 	public Double getPeso() {
@@ -162,12 +151,12 @@ public class Produto implements Serializable {
 		this.quantidadeEstoque = quantidadeEstoque;
 	}
 
-	public String getLinkYoutube() {
-		return linkYoutube;
+	public Integer getQuantidadeAlertaEstoque() {
+		return quantidadeAlertaEstoque;
 	}
 
-	public void setLinkYoutube(String linkYoutube) {
-		this.linkYoutube = linkYoutube;
+	public void setQuantidadeAlertaEstoque(Integer quantidadeAlertaEstoque) {
+		this.quantidadeAlertaEstoque = quantidadeAlertaEstoque;
 	}
 
 	public Boolean getAlertaQuantidadeEstoque() {
@@ -176,6 +165,14 @@ public class Produto implements Serializable {
 
 	public void setAlertaQuantidadeEstoque(Boolean alertaQuantidadeEstoque) {
 		this.alertaQuantidadeEstoque = alertaQuantidadeEstoque;
+	}
+
+	public String getLinkYoutube() {
+		return linkYoutube;
+	}
+
+	public void setLinkYoutube(String linkYoutube) {
+		this.linkYoutube = linkYoutube;
 	}
 
 	public Integer getQuantidadeClique() {
@@ -210,7 +207,5 @@ public class Produto implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
 
 }
