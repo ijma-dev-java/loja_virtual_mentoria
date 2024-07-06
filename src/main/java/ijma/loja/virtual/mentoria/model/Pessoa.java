@@ -26,21 +26,32 @@ public abstract class Pessoa implements Serializable { // Tabela por classes con
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_pessoa")
 	private Long id;
-	
+
 	@Column(nullable = false)
 	private String nome;
-	
+
 	@Column(nullable = false)
 	private String email;
 
 	@Column(nullable = false)
 	private String telefone;
 	
+	@Column
+	private String tipoPessoa;
+	
+	public String getTipoPessoa() {
+		return tipoPessoa;
+	}
+
+	public void setTipoPessoa(String tipoPessoa) {
+		this.tipoPessoa = tipoPessoa;
+	}
+
 	// mappedBy = "pessoa" (mapeando o pai)
 	// orphanRemoval = true (deletando o pai com os filhos associados)
 	// cascade = CascadeType.ALL (crud em cascata)
 	// fetch = FetchType.LAZY (só vai carregar quando precisar)
-	// fetch = FetchType.EAGER (traz do banco junto com o pai) 
+	// fetch = FetchType.EAGER (traz do banco junto com o pai)
 	@OneToMany(mappedBy = "pessoa", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
 
