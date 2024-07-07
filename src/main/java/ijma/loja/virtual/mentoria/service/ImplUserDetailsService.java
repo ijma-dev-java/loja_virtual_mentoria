@@ -12,21 +12,21 @@ import ijma.loja.virtual.mentoria.repository.UsuarioRepository;
 
 @Service
 public class ImplUserDetailsService implements UserDetailsService {
-	
+
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
+
 		Usuario usuario = usuarioRepository.findUserByLogin(username); // Recebe o login para a consulta
-		
+
 		if (usuario == null) {
 			throw new UsernameNotFoundException("Usuário não encontrado!");
 		}
-		
+
 		return new User(usuario.getLogin(), usuario.getPassword(), usuario.getAuthorities());
-		
+
 	}
 
 }

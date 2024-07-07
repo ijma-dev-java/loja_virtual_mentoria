@@ -102,7 +102,7 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.7.0</version>
 		</dependency>
-
+		
 	</dependencies>
 
 	<build>

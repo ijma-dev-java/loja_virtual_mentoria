@@ -18,6 +18,7 @@ import ijma.loja.virtual.mentoria.model.Acesso;
 import ijma.loja.virtual.mentoria.repository.AcessoRepository;
 import ijma.loja.virtual.mentoria.service.AcessoService;
 
+// @CrossOrigin(origins = {"https://www.ijmaservicestech.com.br"})
 @Controller
 @RestController
 public class AcessoController {
@@ -47,7 +48,8 @@ public class AcessoController {
 		return new ResponseEntity("Acesso removido com sucesso!", HttpStatus.OK);
 
 	}
-
+	
+	// @Secured({ "ROLE_GERENTE", "ROLE_ADMIN" })
 	@ResponseBody
 	@DeleteMapping(value = "**/deleteAcessoPorId/{id}")
 	public ResponseEntity<?> deleteAcessoPorId(@PathVariable("id") Long id) {
