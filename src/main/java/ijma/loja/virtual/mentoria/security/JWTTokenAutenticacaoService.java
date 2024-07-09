@@ -1,5 +1,6 @@
 package ijma.loja.virtual.mentoria.security;
 
+import java.io.IOException;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,8 +14,10 @@ import org.springframework.stereotype.Service;
 import ijma.loja.virtual.mentoria.ApplicationContextLoad;
 import ijma.loja.virtual.mentoria.model.Usuario;
 import ijma.loja.virtual.mentoria.repository.UsuarioRepository;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
 
 @Service
 @Component
@@ -59,34 +62,51 @@ public class JWTTokenAutenticacaoService { // Criar e retornar a autenticação 
 	}
 
 	// Retornando o usuário validado com token, caso contrário retorna null
-	public Authentication getAuthentication(HttpServletRequest request, HttpServletResponse response) {
+	public Authentication getAuthentication(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
 
 		String token = request.getHeader(HEADER_STRING);
 
-		if (token != null) {
+		try {
 
-			String tokenLimpo = token.replace(TOKEN_PREFIX, "").trim(); // Limpando valores do token
+			if (token != null) {
 
-			// Fazendo a validação do token do usuário na requisão e obtendo o usuário
-			String user = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(tokenLimpo).getBody().getSubject();
+				String tokenLimpo = token.replace(TOKEN_PREFIX, "").trim(); // Limpando valores do token
 
-			if (user != null) {
+				// Fazendo a validação do token do usuário na requisão e obtendo o usuário
+				String user = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(tokenLimpo).getBody().getSubject();
 
-				Usuario usuario = ApplicationContextLoad.getApplicationContext().getBean(UsuarioRepository.class)
-						.findUserByLogin(user);
+				if (user != null) {
 
-				if (usuario != null) {
+					Usuario usuario = ApplicationContextLoad.getApplicationContext().getBean(UsuarioRepository.class)
+							.findUserByLogin(user);
 
-					return new UsernamePasswordAuthenticationToken(usuario.getLogin(), usuario.getSenha(),
-							usuario.getAuthorities());
+					if (usuario != null) {
+
+						return new UsernamePasswordAuthenticationToken(usuario.getLogin(), usuario.getSenha(),
+								usuario.getAuthorities());
+
+					}
 
 				}
 
 			}
 
+		} catch (SignatureException e) {
+
+			response.getWriter().write("Token inválido");
+
+		} catch (ExpiredJwtException e) {
+
+			response.getWriter().write("Token expirado, efetue o login lovamente");
+
 		}
 
-		liberacaoCors(response);
+		finally {
+
+			liberacaoCors(response);
+
+		}
 
 		return null;
 
