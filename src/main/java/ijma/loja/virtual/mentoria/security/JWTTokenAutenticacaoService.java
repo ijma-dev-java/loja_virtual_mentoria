@@ -43,9 +43,8 @@ public class JWTTokenAutenticacaoService { // Criar e retornar a autenticação 
 		String JWT = Jwts.builder() // Chama o gerador de token
 				.setSubject(username) // Adiciona o usuário
 				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME)) // Tempo de expiração
-				.signWith(SignatureAlgorithm.HS512, SECRET).compact(); // Gerar o token e compactar juntando com a senha
-																		// secreta
-
+				.signWith(SignatureAlgorithm.HS512, SECRET).compact(); // Gerar o token e compactar juntando com a senha secreta
+		
 		// Exemplo: Bearer
 		// !@#!@#!@#r3r535434g56fd4gfd33!.@#!@3sfsdfdsfkdsflspor889486094809.er809e7987987fds)
 		String token = TOKEN_PREFIX + " " + JWT;

@@ -45,6 +45,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 				.authenticate(new UsernamePasswordAuthenticationToken(user.getLogin(), user.getSenha()));
 	}
 	
+	// Autenticação aceita
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
@@ -61,6 +62,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
 	}
 	
+	// Autenticação rejeitada
 	@Override
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException failed) throws IOException, ServletException {

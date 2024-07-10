@@ -23,7 +23,7 @@ import ijma.loja.virtual.mentoria.model.Acesso;
 import ijma.loja.virtual.mentoria.repository.AcessoRepository;
 import junit.framework.TestCase;
 
-@Profile("test")
+@Profile("dev")
 @SpringBootTest(classes = LojaVirtualMentoriaApplication.class)
 public class LojaVirtualMentoriaApplicationTests extends TestCase {
 
@@ -190,7 +190,7 @@ public class LojaVirtualMentoriaApplicationTests extends TestCase {
 	}
 
 	@Test
-	public void testCadastraAcesso() {
+	public void testCadastraAcesso() throws ExceptionMentoriaJava {
 
 		Acesso acesso = new Acesso();
 

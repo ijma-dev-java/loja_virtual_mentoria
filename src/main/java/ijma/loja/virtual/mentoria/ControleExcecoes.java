@@ -21,6 +21,19 @@ import ijma.loja.virtual.mentoria.model.dto.ObjetoErroDTO;
 @ControllerAdvice
 @RestControllerAdvice
 public class ControleExcecoes extends ResponseEntityExceptionHandler {
+	
+	// Capitura exceções customizada do projeto
+	@ExceptionHandler(ExceptionMentoriaJava.class)
+	public ResponseEntity<Object> handleExceptionCustom (ExceptionMentoriaJava ex) {
+		
+		ObjetoErroDTO objetoErroDTO = new ObjetoErroDTO();
+		
+		objetoErroDTO.setError(ex.getMessage());
+		objetoErroDTO.setCode(HttpStatus.OK.toString());
+		
+		return new ResponseEntity<Object>(objetoErroDTO.getError(), HttpStatus.OK);
+		
+	}
 
 	// Capitura exceções do projeto
 	@ExceptionHandler({ Exception.class, RuntimeException.class, Throwable.class })
