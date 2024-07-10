@@ -1,5 +1,6 @@
 package ijma.loja.virtual.mentoria;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -46,7 +47,7 @@ public class LojaVirtualMentoriaApplicationTests extends TestCase {
 
 		Acesso acesso = new Acesso();
 
-		acesso.setNomeDescricao("ROLE_COMPRADOR");
+		acesso.setNomeDescricao("ROLE_COMPRADOR" + Calendar.getInstance().getTimeInMillis());
 
 		ObjectMapper objectMapper = new ObjectMapper();
 
@@ -192,9 +193,11 @@ public class LojaVirtualMentoriaApplicationTests extends TestCase {
 	@Test
 	public void testCadastraAcesso() throws ExceptionMentoriaJava {
 
+		String descricaoAcesso = "ROLE_ADMIN_TESTE" + Calendar.getInstance().getTimeInMillis();
+
 		Acesso acesso = new Acesso();
 
-		acesso.setNomeDescricao("ROLE_ADMIN");
+		acesso.setNomeDescricao(descricaoAcesso);
 
 		assertEquals(true, acesso.getId() == null);
 
@@ -204,7 +207,7 @@ public class LojaVirtualMentoriaApplicationTests extends TestCase {
 		assertEquals(true, acesso.getId() > 0);
 
 		/* Validar dados salvos da forma correta */
-		assertEquals("ROLE_ADMIN", acesso.getNomeDescricao());
+		assertEquals(descricaoAcesso, acesso.getNomeDescricao());
 
 		/* Teste de carregamento */
 

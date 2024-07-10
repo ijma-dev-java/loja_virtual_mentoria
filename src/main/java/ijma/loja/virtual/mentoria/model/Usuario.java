@@ -35,42 +35,38 @@ public class Usuario implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_usuario")
 	private Long id;
-	
-	@Column(nullable = false)
+
+	@Column(nullable = false, unique = true)
 	private String login;
-	
+
 	@Column(nullable = false)
 	private String senha;
-	
+
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date dataAtualSenha;
-	
+
 	@ManyToOne(targetEntity = Pessoa.class)
 	@JoinColumn(name = "pessoa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "pessoa_pk"))
 	private Pessoa pessoa;
 
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinTable(
-			name = "usuario_acesso", 
-			uniqueConstraints = @UniqueConstraint(columnNames = { "usuario_id", "acesso_id" }, 
-			name = "unique_acesso_user"), 
-	joinColumns = @JoinColumn(
-			name = "usuario_id", 
-			referencedColumnName = "id", 
-			table = "usuario", 
-			unique = false, 
-			foreignKey = @ForeignKey(name = "usuario_fk", 
-			value = ConstraintMode.CONSTRAINT)), 
-	inverseJoinColumns = @JoinColumn(
-			name = "acesso_id", 
-			referencedColumnName = "id", 
-			table = "acesso", 
-			unique = false, 
-			foreignKey = @ForeignKey(name = "acesso_fk", 
-			value = ConstraintMode.CONSTRAINT)))
+	@JoinTable(name = "usuario_acesso", uniqueConstraints = @UniqueConstraint(columnNames = { "usuario_id",
+			"acesso_id" }, name = "unique_acesso_user"), joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id", table = "usuario", unique = false, foreignKey = @ForeignKey(name = "usuario_fk", value = ConstraintMode.CONSTRAINT)), inverseJoinColumns = @JoinColumn(name = "acesso_id", referencedColumnName = "id", table = "acesso", unique = false, foreignKey = @ForeignKey(name = "acesso_fk", value = ConstraintMode.CONSTRAINT)))
 	private List<Acesso> acessos;
-	
+
+	@ManyToOne(targetEntity = Pessoa.class)
+	@JoinColumn(name = "empresa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "empresa_pk"))
+	private Pessoa empresa;
+
+	public Pessoa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Pessoa empresa) {
+		this.empresa = empresa;
+	}
+
 	public Long getId() {
 		return id;
 	}
