@@ -1,13 +1,14 @@
 package ijma.loja.virtual.mentoria;
 
+import java.util.Calendar;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Profile;
 
+import ijma.loja.virtual.mentoria.controller.PessoaController;
 import ijma.loja.virtual.mentoria.model.PessoaJuridica;
-import ijma.loja.virtual.mentoria.repository.PessoaRepository;
-import ijma.loja.virtual.mentoria.service.PessoaUserService;
 import junit.framework.TestCase;
 
 @Profile("dev")
@@ -15,35 +16,23 @@ import junit.framework.TestCase;
 public class TestePessoaUsuario extends TestCase {
 
 	@Autowired
-	private PessoaUserService pessoaUserService;
-
-	@Autowired
-	private PessoaRepository pessoaRepository;
+	private PessoaController pessoaController;
 
 	@Test
-	public void testeCadPessoa() {
+	public void testeCadPessoa() throws ExceptionMentoriaJava {
 
 		PessoaJuridica pessoaJuridica = new PessoaJuridica();
 
-		pessoaJuridica.setCnpj("21231231231313");
+		pessoaJuridica.setCnpj("" + Calendar.getInstance().getTimeInMillis());
 		pessoaJuridica.setNome("fsdfsdfsfds");
-		pessoaJuridica.setEmail("21231231231313@fsfsdfdsf.com");
+		pessoaJuridica.setEmail("teste@protocolo.com");
 		pessoaJuridica.setTelefone("5645454");
 		pessoaJuridica.setInscricaoEstadual("21231231231313ffsfs");
 		pessoaJuridica.setInscricaoMunicipal("212312312313135345454564564");
 		pessoaJuridica.setNomeFantasia("Fsdfsfsdfs fsdfdsfdsfds");
 		pessoaJuridica.setRazaoSocial("gfdgdfgfd gfdgfdgfdgdfgfdgdf");
 
-		pessoaRepository.save(pessoaJuridica);
-
-		/*
-		 * PessoaFisica pessoaFisica = new PessoaFisica();
-		 * 
-		 * pessoaFisica.setCpf("54564564564564"); pessoaFisica.setNome("fsdfsdfdsfds");
-		 * pessoaFisica.setEmail("ffsdfsdfds@ffsfssd.com");
-		 * pessoaFisica.setTelefone("1231231231");
-		 * pessoaFisica.setEmpresa(pessoaFisica);
-		 */
+		pessoaController.salvarPj(pessoaJuridica);
 
 	}
 
