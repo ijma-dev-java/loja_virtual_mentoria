@@ -12,5 +12,8 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 	
 	@Query(value = "select pj from PessoaJuridica pj where pj.cnpj = ?1")
 	public PessoaJuridica existeCnpjCadastrado(String cnpj);
+	
+	@Query(value = "select pj from PessoaJuridica pj where pj.email = ?1")
+	public PessoaJuridica existeEmailCadastrado(String email);
 
 }

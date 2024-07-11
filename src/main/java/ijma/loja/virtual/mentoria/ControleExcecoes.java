@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -21,18 +22,18 @@ import ijma.loja.virtual.mentoria.model.dto.ObjetoErroDTO;
 @ControllerAdvice
 @RestControllerAdvice
 public class ControleExcecoes extends ResponseEntityExceptionHandler {
-	
+
 	// Capitura exceções customizada do projeto
 	@ExceptionHandler(ExceptionMentoriaJava.class)
-	public ResponseEntity<Object> handleExceptionCustom (ExceptionMentoriaJava ex) {
-		
+	public ResponseEntity<Object> handleExceptionCustom(ExceptionMentoriaJava ex) {
+
 		ObjetoErroDTO objetoErroDTO = new ObjetoErroDTO();
-		
+
 		objetoErroDTO.setError(ex.getMessage());
 		objetoErroDTO.setCode(HttpStatus.OK.toString());
-		
+
 		return new ResponseEntity<Object>(objetoErroDTO.getError(), HttpStatus.OK);
-		
+
 	}
 
 	// Capitura exceções do projeto
@@ -50,7 +51,13 @@ public class ControleExcecoes extends ResponseEntityExceptionHandler {
 			for (ObjectError objectError : list) {
 				msg += objectError.getDefaultMessage() + "\n";
 			}
-		} else {
+		}
+		
+		if (ex instanceof HttpMessageNotReadableException) {
+			msg = "Não está sendo enviado dados para o BODY - corpo da requisição";
+		}
+
+		else {
 			msg = ex.getMessage();
 		}
 
